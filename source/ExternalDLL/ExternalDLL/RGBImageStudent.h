@@ -7,6 +7,8 @@
 #pragma once
 #include "RGBImage.h"
 class RGBImageStudent : public RGBImage {
+private:
+	RGB * other_object_copy;
 public:
 
 	RGBImageStudent();
