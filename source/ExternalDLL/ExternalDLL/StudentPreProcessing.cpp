@@ -1,8 +1,11 @@
 #include "StudentPreProcessing.h"
 
 
-IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &image) const {
-	return nullptr;
+IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &src) const {
+	Grayscaling grayScaleAlgorithm;
+	IntensityImage * image = ImageFactory::newIntensityImage();
+	grayScaleAlgorithm.luminance(src, *image);
+	return image;
 }
 
 IntensityImage * StudentPreProcessing::stepScaleImage(const IntensityImage &image) const {

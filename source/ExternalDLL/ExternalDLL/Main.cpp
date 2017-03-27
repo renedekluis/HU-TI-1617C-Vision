@@ -15,28 +15,30 @@ bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
 
-	ImageFactory::setImplementation(ImageFactory::DEFAULT);
-	//ImageFactory::setImplementation(ImageFactory::STUDENT);
+	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
+	ImageFactory::setImplementation(ImageFactory::STUDENT);
 
-
+	
 	ImageIO::debugFolder = "D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\FaceMinMin";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
-
+	
 
 
 	RGBImage * input = ImageFactory::newRGBImage();
+	
 	if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\female-1.png", *input)) {
 		std::cout << "Image could not be loaded!" << std::endl;
 		system("pause");
 		return 0;
 	}
-
+	//while (1) { std::cout << "yolo\n"; } //Ultra Super Debugger Method
 
 	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
 
 	DLLExecution * executor = new DLLExecution(input);
 
+	
 
 	if (executeSteps(executor)) {
 		std::cout << "Face recognition successful!" << std::endl;

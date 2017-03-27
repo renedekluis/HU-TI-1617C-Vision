@@ -61,7 +61,9 @@ bool ImageIO::loadImage(const std::string file, RGBImage &dst) {
 
 	Mat normal;
 	raw.convertTo(normal, CV_8UC3);
+
 	HereBeDragons::HeIsContentedThyPoorDrudgeToBe(normal, dst);
+	
 	return true;
 }
 

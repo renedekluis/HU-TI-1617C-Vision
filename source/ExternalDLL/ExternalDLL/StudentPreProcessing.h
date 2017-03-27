@@ -5,7 +5,14 @@
 */
 
 #pragma once
-#include "PreProcessing.h"
+#include "DefaultPreProcessing.h"
+#include "ImageIO.h"
+#include "GrayscaleAlgorithm.h"
+#include "ImageFactory.h"
+#include "HereBeDragons.h"
+#include "Grayscaling.hpp"
+
+
 class StudentPreProcessing : public PreProcessing {
 public:
 	IntensityImage * stepToIntensityImage(const RGBImage &image) const;

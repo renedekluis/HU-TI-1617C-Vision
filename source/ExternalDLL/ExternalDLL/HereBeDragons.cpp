@@ -295,6 +295,7 @@ void HereBeDragons::HeIsContentedThyPoorDrudgeToBe(const cv::Mat &source, RGBIma
 			dst.setPixel(x, y, RGB{ raw[2], raw[1], raw[0] });
 		}
 	}
+	
 	//RGBImage * image = new RGBImage(source.cols, source.rows);
 	//int dataLenght = source.cols * source.rows * source.elemSize();
 	//std::copy(source.data, source.data + dataLenght, (unsigned char *)image->data);
