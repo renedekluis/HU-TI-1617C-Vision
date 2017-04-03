@@ -13,7 +13,9 @@
 #include "Grayscaling.hpp"
 
 
+
 class StudentPreProcessing : public PreProcessing {
+
 public:
 	IntensityImage * stepToIntensityImage(const RGBImage &image) const;
 	IntensityImage * stepScaleImage(const IntensityImage &image) const;

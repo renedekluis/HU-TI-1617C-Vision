@@ -9,12 +9,19 @@
 #include "HereBeDragons.h"
 #include "ImageFactory.h"
 #include "DLLExecution.h"
+#include <ctime>
+#include <fstream>
 
 void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
-
+	std::clock_t start;
+	float duration;
+	std::ofstream outfile;
+	outfile.open("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\FaceMinMin\\results.txt", std::ios_base::app);
+	
+	
 	ImageFactory::setImplementation(ImageFactory::DEFAULT);
 	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
@@ -22,33 +29,123 @@ int main(int argc, char * argv[]) {
 	ImageIO::debugFolder = "D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\FaceMinMin";
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
-	
+	for (int i = 0; i < 50; i++) {
+		start = std::clock();
+		RGBImage * input = ImageFactory::newRGBImage();
 
-
-	RGBImage * input = ImageFactory::newRGBImage();
-	
-	if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\female-1.png", *input)) {
-		std::cout << "Image could not be loaded!" << std::endl;
-		system("pause");
-		return 0;
-	}
-	//while (1) { std::cout << "yolo\n"; } //Ultra Super Debugger Method
-
-	ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
-
-	DLLExecution * executor = new DLLExecution(input);
-
-	
-
-	if (executeSteps(executor)) {
-		std::cout << "Face recognition successful!" << std::endl;
-		std::cout << "Facial parameters: " << std::endl;
-		for (int i = 0; i < 16; i++) {
-			std::cout << (i+1) << ": " << executor->facialParameters[i] << std::endl;
+		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\female-1.png", *input)) {
+			std::cout << "Image could not be loaded!" << std::endl;
+			system("pause");
+			return 0;
 		}
-	}
 
-	delete executor;
+		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+
+		DLLExecution * executor = new DLLExecution(input);
+
+
+
+		if (executeSteps(executor)) {
+			std::cout << "Face recognition successful!" << std::endl;
+			std::cout << "Facial parameters: " << std::endl;
+			for (int i = 0; i < 16; i++) {
+				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+			}
+		}
+
+		delete executor;
+		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
+		outfile << "female-1.png: " << duration << std::endl;
+	}
+	//=====================
+
+	for (int i = 0; i < 50; i++) {
+		start = std::clock();
+		RGBImage * input = ImageFactory::newRGBImage();
+
+		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\child-1.png", *input)) {
+			std::cout << "Image could not be loaded!" << std::endl;
+			system("pause");
+			return 0;
+		}
+
+		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+
+		DLLExecution * executor = new DLLExecution(input);
+
+
+
+		if (executeSteps(executor)) {
+			std::cout << "Face recognition successful!" << std::endl;
+			std::cout << "Facial parameters: " << std::endl;
+			for (int i = 0; i < 16; i++) {
+				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+			}
+		}
+
+		delete executor;
+		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
+		outfile << "child-1.png: " << duration << std::endl;
+	}
+	//======================
+	for (int i = 0; i < 50; i++) {
+		start = std::clock();
+		RGBImage * input = ImageFactory::newRGBImage();
+
+		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\male-2.png", *input)) {
+			std::cout << "Image could not be loaded!" << std::endl;
+			system("pause");
+			return 0;
+		}
+
+		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+
+		DLLExecution * executor = new DLLExecution(input);
+
+
+
+		if (executeSteps(executor)) {
+			std::cout << "Face recognition successful!" << std::endl;
+			std::cout << "Facial parameters: " << std::endl;
+			for (int i = 0; i < 16; i++) {
+				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+			}
+		}
+
+		delete executor;
+		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
+		outfile << "male-2.png: " << duration << std::endl;
+	}
+	//========================
+	for (int i = 0; i < 50; i++) {
+		start = std::clock();
+		RGBImage * input = ImageFactory::newRGBImage();
+
+		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\male-3.png", *input)) {
+			std::cout << "Image could not be loaded!" << std::endl;
+			system("pause");
+			return 0;
+		}
+
+		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+
+		DLLExecution * executor = new DLLExecution(input);
+
+
+
+		if (executeSteps(executor)) {
+			std::cout << "Face recognition successful!" << std::endl;
+			std::cout << "Facial parameters: " << std::endl;
+			for (int i = 0; i < 16; i++) {
+				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+			}
+		}
+
+		delete executor;
+		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
+		outfile << "male-3.png: " << duration << std::endl;
+	}
+	outfile.close();
 	system("pause");
 	return 1;
 }
@@ -65,11 +162,12 @@ int main(int argc, char * argv[]) {
 bool executeSteps(DLLExecution * executor) {
 
 	//Execute the four Pre-processing steps
-	if (!executor->executePreProcessingStep1(false)) {
+	if (!executor->executePreProcessingStep1(true)) {
 		std::cout << "Pre-processing step 1 failed!" << std::endl;
 		return false;
 	}
-
+	//ImageIO::saveIntensityImage(*executor->resultPreProcessingStep1, ImageIO::getDebugFileName("Pre-processing-1.png"));
+	
 	if (!executor->executePreProcessingStep2(false)) {
 		std::cout << "Pre-processing step 2 failed!" << std::endl;
 		return false;

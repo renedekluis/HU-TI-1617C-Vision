@@ -2,9 +2,18 @@
 
 
 IntensityImage * StudentPreProcessing::stepToIntensityImage(const RGBImage &src) const {
+	
+
 	Grayscaling grayScaleAlgorithm;
-	IntensityImage * image = ImageFactory::newIntensityImage();
+	IntensityImageStudent * image = new IntensityImageStudent(src.getWidth(),src.getHeight());
 	grayScaleAlgorithm.luminance(src, *image);
+	//grayScaleAlgorithm.single_color(src, *image);
+
+
+	
+	//std::cout << "Duration: " << duration << '\n';
+
+
 	return image;
 }
 

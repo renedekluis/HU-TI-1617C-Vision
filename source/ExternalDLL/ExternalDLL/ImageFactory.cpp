@@ -64,6 +64,7 @@ IntensityImage * ImageFactory::newIntensityImage() {
 
 
 
+
 IntensityImage * ImageFactory::newIntensityImage(const IntensityImage &other) {
 	IntensityImage * image = ImageFactory::newIntensityImage(other.getWidth(), other.getHeight());
 	int size = other.getHeight() * other.getWidth();
