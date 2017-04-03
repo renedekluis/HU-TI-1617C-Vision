@@ -15,8 +15,8 @@ bool executeSteps(DLLExecution * executor);
 
 int main(int argc, char * argv[]) {
 
-	//ImageFactory::setImplementation(ImageFactory::DEFAULT);
-	ImageFactory::setImplementation(ImageFactory::STUDENT);
+	ImageFactory::setImplementation(ImageFactory::DEFAULT);
+	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 	
 	ImageIO::debugFolder = "D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\FaceMinMin";
