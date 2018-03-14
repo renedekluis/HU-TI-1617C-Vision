@@ -12,139 +12,85 @@
 #include <ctime>
 #include <fstream>
 
+#define RESULTS_FILE    "D:\\Documents-(D)\\HBO-ICT\\git\\HBO-ICT\\Jaar2\\HU-TI-1617C-Vision\\FaceMinMinresults.txt"
+#define FEMALE1_PIC     "D:\\Documents-(D)\\HBO-ICT\\git\\HBO-ICT\\Jaar2\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\female-1.png"
+#define CHILD1_PIC      "D:\\Documents-(D)\\HBO-ICT\\git\\HBO-ICT\\Jaar2\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\child-1.png"
+#define MALE2_PIC       "D:\\Documents-(D)\\HBO-ICT\\git\\HBO-ICT\\Jaar2\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\male-2.png"
+#define MALE3_PIC       "D:\\Documents-(D)\\HBO-ICT\\git\\HBO-ICT\\Jaar2\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\male-3.png"
+#define DEBUG_FOLDER    "D:\\Documents-(D)\\HBO-ICT\\git\\HBO-ICT\\Jaar2\\HU-TI-1617C-Vision\\FaceMinMin"
+
 void drawFeatureDebugImage(IntensityImage &image, FeatureMap &features);
 bool executeSteps(DLLExecution * executor);
+
+bool LoadPicture(std::string path, RGBImage* input)
+{
+    if (!ImageIO::loadImage(path, *input)) {
+        std::cout << "Image could not be loaded!" << std::endl;
+        system("pause");
+        return false;
+    }
+    return true;
+}
+
+void PrintExecuteSteps(DLLExecution* executor)
+{
+    if (executeSteps(executor)) {
+        std::cout << "Face recognition successful!" << std::endl;
+        std::cout << "Facial parameters: " << std::endl;
+        for (int i = 0; i < 16; i++) {
+            std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
+        }
+    }
+}
+
+bool TestLoop(std::string name, std::string Path, int times, std::ofstream& outfile)
+{
+    std::clock_t start;
+    float duration = 0;
+    for (int i = 0; i < times; i++) {
+        start = std::clock();
+        RGBImage * input = ImageFactory::newRGBImage();
+        if (!LoadPicture(Path, input)) return false;
+
+        ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
+
+        DLLExecution* executor = new DLLExecution(input);
+
+        PrintExecuteSteps(executor);
+
+        delete executor;
+
+        duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
+        outfile << name << ": " << duration << std::endl;
+    }
+    return true;
+}
 
 int main(int argc, char * argv[]) {
 	std::clock_t start;
 	float duration;
 	std::ofstream outfile;
-	outfile.open("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\FaceMinMin\\results.txt", std::ios_base::app);
-	
+	outfile.open(RESULTS_FILE, std::ios_base::app);
 	
 	ImageFactory::setImplementation(ImageFactory::DEFAULT);
 	//ImageFactory::setImplementation(ImageFactory::STUDENT);
 
 	
-	ImageIO::debugFolder = "D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\FaceMinMin";
+	ImageIO::debugFolder = DEBUG_FOLDER;
 	ImageIO::isInDebugMode = true; //If set to false the ImageIO class will skip any image save function calls
 
-	for (int i = 0; i < 50; i++) {
-		start = std::clock();
-		RGBImage * input = ImageFactory::newRGBImage();
+    TestLoop("female-1.png", FEMALE1_PIC, 50, outfile);
 
-		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\female-1.png", *input)) {
-			std::cout << "Image could not be loaded!" << std::endl;
-			system("pause");
-			return 0;
-		}
-
-		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
-
-		DLLExecution * executor = new DLLExecution(input);
-
-
-
-		if (executeSteps(executor)) {
-			std::cout << "Face recognition successful!" << std::endl;
-			std::cout << "Facial parameters: " << std::endl;
-			for (int i = 0; i < 16; i++) {
-				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
-			}
-		}
-
-		delete executor;
-		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
-		outfile << "female-1.png: " << duration << std::endl;
-	}
 	//=====================
+    TestLoop("child-1.png", CHILD1_PIC, 50, outfile);
 
-	for (int i = 0; i < 50; i++) {
-		start = std::clock();
-		RGBImage * input = ImageFactory::newRGBImage();
-
-		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\child-1.png", *input)) {
-			std::cout << "Image could not be loaded!" << std::endl;
-			system("pause");
-			return 0;
-		}
-
-		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
-
-		DLLExecution * executor = new DLLExecution(input);
-
-
-
-		if (executeSteps(executor)) {
-			std::cout << "Face recognition successful!" << std::endl;
-			std::cout << "Facial parameters: " << std::endl;
-			for (int i = 0; i < 16; i++) {
-				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
-			}
-		}
-
-		delete executor;
-		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
-		outfile << "child-1.png: " << duration << std::endl;
-	}
 	//======================
-	for (int i = 0; i < 50; i++) {
-		start = std::clock();
-		RGBImage * input = ImageFactory::newRGBImage();
+    TestLoop("male-2.png", MALE2_PIC, 50, outfile);
 
-		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\male-2.png", *input)) {
-			std::cout << "Image could not be loaded!" << std::endl;
-			system("pause");
-			return 0;
-		}
-
-		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
-
-		DLLExecution * executor = new DLLExecution(input);
-
-
-
-		if (executeSteps(executor)) {
-			std::cout << "Face recognition successful!" << std::endl;
-			std::cout << "Facial parameters: " << std::endl;
-			for (int i = 0; i < 16; i++) {
-				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
-			}
-		}
-
-		delete executor;
-		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
-		outfile << "male-2.png: " << duration << std::endl;
-	}
 	//========================
-	for (int i = 0; i < 50; i++) {
-		start = std::clock();
-		RGBImage * input = ImageFactory::newRGBImage();
-
-		if (!ImageIO::loadImage("D:\\Documents-(D)\\HBO-ICT\\jaar2\\Blok C\\vision\\HU-TI-1617C-Vision\\testsets\\Set A\\TestSet Images\\male-3.png", *input)) {
-			std::cout << "Image could not be loaded!" << std::endl;
-			system("pause");
-			return 0;
-		}
-
-		ImageIO::saveRGBImage(*input, ImageIO::getDebugFileName("debug.png"));
-
-		DLLExecution * executor = new DLLExecution(input);
+    TestLoop("male-3.png", MALE3_PIC, 50, outfile);
 
 
-
-		if (executeSteps(executor)) {
-			std::cout << "Face recognition successful!" << std::endl;
-			std::cout << "Facial parameters: " << std::endl;
-			for (int i = 0; i < 16; i++) {
-				std::cout << (i + 1) << ": " << executor->facialParameters[i] << std::endl;
-			}
-		}
-
-		delete executor;
-		duration = (std::clock() - start) / (float)CLOCKS_PER_SEC;
-		outfile << "male-3.png: " << duration << std::endl;
-	}
 	outfile.close();
 	system("pause");
 	return 1;
